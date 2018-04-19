@@ -57,6 +57,7 @@ namespace SS.Form.Parse
 
             context.StlPageFoot["SS.Form.Parse.Foot." + vueId] = $@"
 <script type=""text/javascript"">
+$V_Jq=$.noConflict(true);
 Vue.use(VeeValidate);
 var {vueId} = new Vue({{
     el: '#{vueId}',
@@ -85,7 +86,7 @@ var {vueId} = new Vue({{
         }},
         submit: function (event) {{
             this.errorMessage = '';
-            var $this = this;
+            var $V_Jqthis = this;
             var data = {{
                 code: this.code,
                 attributes: this.attributes
@@ -93,7 +94,8 @@ var {vueId} = new Vue({{
           
             this.$validator.validateAll().then(function (result) {{
                 if (result) {{
-                    $.ajax({{
+                    //$.ajax({{
+                      $V_Jq.ajax({{
                         url : ""{apiUrlSubmit}"",
                         xhrFields: {{
                             withCredentials: true
@@ -104,13 +106,16 @@ var {vueId} = new Vue({{
                         dataType: ""json"",
                         success: function(data)
                         {{
-                            $this.isSuccess = true;
+                            //$this.isSuccess = true;
+                              $V_Jqthis.isSuccess = true;
                         }},
                         error: function (err)
                         {{
-                            var err = JSON.parse(err.responseText);
-                            $this.isSuccess = false;
-                            $this.errorMessage = err.message;
+                             var err = JSON.parse(err.responseText);
+                            //$this.isSuccess = false;
+                            //$this.errorMessage = err.message;
+                            $V_Jqthis.isSuccess = false;
+                            $V_Jqthis.errorMessage = err.message;
                         }}
                     }});
                 }}
